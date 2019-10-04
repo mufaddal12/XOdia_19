@@ -298,39 +298,6 @@ void validation::show()
     }
 }
 
-/*void validation::play()
-{
-    string s;
-    while(isWin()==-1)
-    {
-        if(!myColor)
-        {
-            do
-            {
-                cout<<"Blue's Turn : "; getline(cin,s);
-            }while(!isValid(s));
-            cout<<"Valid\n";
-            move(s);
-            //actualMove(s);
-        }
-        else
-        {
-            do
-            {
-                cout<<"Red's Turn : "; getline(cin,s);
-            }while(!isValid(s));
-            cout<<"Valid\n";
-            move(s);
-            //actualMove(s);
-        }
-        
-        myColor = !myColor;
-    }
-    if(isWin()==1)
-        cout<<"Red wins\n";
-    else
-        cout<<"Blue wins\n";    
-}*/
 //-------------------end of validation class functions-------------------
 
 //----------------------bot class functions-------------------------------
@@ -359,8 +326,8 @@ int bot::eval()
 
     //----------Marble out of board-----------
     //When some marbles are pushed botPlayers or !botPlayers
-    pushVal += (10000*(Marbles[!botPlayer] - comp.marbles[!botPlayer]));
-    pushVal += (10000*(comp.marbles[botPlayer] - Marbles[botPlayer]));
+    pushVal += (1000*(Marbles[!botPlayer] - comp.marbles[!botPlayer]));
+    pushVal += (1000*(comp.marbles[botPlayer] - Marbles[botPlayer]));
 
 
 
@@ -389,7 +356,7 @@ int bot::eval()
        		vector<string> oppNeighs = comp.getNeighbours(comp.players[!botPlayer][i],!botPlayer);
        		clusVal = clusterValue(oppNeighs);
        		clusterVal -= clusVal;
-       		centreDistVal -= centreDist(comp.players[botPlayer][i]);
+       		centreDistVal -= centreDist(comp.players[!botPlayer][i]);
        	}
     }
 
@@ -410,7 +377,7 @@ int bot::eval()
 int bot::clusterValue(vector<string> neighs)
 {
     if (neighs.size() == 0)
-        return -1000;
+        return -500;
     else
     {
         int val = 100;
@@ -422,8 +389,43 @@ int bot::clusterValue(vector<string> neighs)
 int bot::centreDist(string pos)
 {
     string mid = "D3";
-    int dist = mod(pos);
-    return (5-dist)*25;
+    int mod = 0;
+    if(pos[0] == mid[0])
+        mod = abs(pos[1] - mid[1]);
+    else if(pos[1] == mid[1])
+        mod = abs(mid[0] - pos[0]);
+    else if(pos[0] == 'C')
+    {
+        if(pos[1] == '2' || pos[1] == '7')
+            mod = 3;
+        else
+            mod = 2;        
+    }
+    else if(pos[0] == 'E')
+    {
+        if(pos[1] == '1' || pos[1] == '6')
+            mod = 3;
+        else
+            mod = 2;
+    }
+    else if(pos[0] == 'B')
+    {
+        if(pos[1] == '3' || pos[1] == '7')
+            mod = 3;
+        else
+            mod = 2;
+    }
+    else if(pos[0] == 'F')
+    {
+        if(pos[1] == '1' || pos[1] == '5')
+            mod = 3;
+        else
+            mod = 2;        
+    }
+    else
+        mod = 4;
+    
+    return (4-mod)*50;
 }
 
 string bot::findBestMove()
@@ -457,30 +459,6 @@ string bot::findBestMove()
     return bestMoves[i];
 }
 
-int bot::mod(string x1y1)
-{
-    string x2y2 = "D3";
-
-	if (x1y1[0] == x2y2[0]) // marbles are along same row
-	{
-		return abs(x1y1[1] - x2y2[1]);
-	}
-	else if (x1y1[1] == x2y2[1]) // marbles along same diagonal
-	{
-		return abs(x1y1[0] - x2y2[0]);
-	}
-	else // along different row and diagonal
-	{
-		if (x1y1[0] - x2y2[0] == x2y2[1] - x1y1[1]) // marbles along proper line
-		{
-			return abs(x1y1[0] - x2y2[0]);
-		}
-		else 
-        {
-            return abs(x1y1[0] - x2y2[0]) + abs(x1y1[1] - x2y2[1]);
-        }
-	}
-}
 int bot::miniMax(bool isMax, int h, int alpha, int beta)
 {
     if(h==maxD)
@@ -669,7 +647,7 @@ void play(bool botP)
             auto stop = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stop - start);
             float time = duration.count()/1000000.0;
-            //cout<<s<<" ----Time : "<<time<<"----"<<endl;
+            //cout<<s<<" ----Time : "<<time<<"s----"<<endl;
         }
         else
         {
@@ -686,7 +664,7 @@ void play(bool botP)
             auto stop = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stop - start);
             float time = duration.count()/1000000.0;
-            //cout<<s<<" ----Time : "<<time<<"----"<<endl;
+            //cout<<s<<" ----Time : "<<time<<"s----"<<endl;
         }
         actualMove(v,s,turn);
         v.move(s);
@@ -708,9 +686,9 @@ int main()
     //fflush(stdin);
     cin.ignore(1);
     if(botP == 1)
-        play(false);
-    else
         play(true);
+    else
+        play(false);
     
     return 0;
 }
