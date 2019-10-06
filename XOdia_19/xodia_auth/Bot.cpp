@@ -380,7 +380,7 @@ int bot::clusterValue(vector<string> neighs)
         return -500;
     else
     {
-        int val = 100;
+        int val = 50;
         val *= neighs.size();
         return val;
     }
@@ -425,7 +425,7 @@ int bot::centreDist(string pos)
     else
         mod = 4;
     
-    return (4-mod)*50;
+    return (4-mod)*25;
 }
 
 string bot::findBestMove()
@@ -676,6 +676,61 @@ void play(bool botP)
     else
         cout<<"Blue wins\n";    */
 }
+/*
+void play(bool botP)
+{
+    string s;
+    bool turn = false;
+    validation v(turn);
+    do
+    {
+    	validation v(turn);
+        
+        display();
+        if(!turn)
+        {
+            bot b(turn, v);
+            cout<<"Blue's Turn : "; //getline(cin,s);
+            auto start = high_resolution_clock::now();
+            //if(botP == turn)
+            {
+                s = b.findBestMove(); 
+                cout<<s<<endl;
+            } 
+            //else
+              //  getline(cin,s);
+            auto stop = high_resolution_clock::now();
+            auto duration = duration_cast<microseconds>(stop - start);
+            float time = duration.count()/1000000.0;
+            cout<<s<<" ----Time : "<<time<<"s----"<<endl;
+        }
+        else
+        {
+            bot b(turn, v);
+            cout<<"Red's Turn : "; //getline(cin,s);
+            auto start = high_resolution_clock::now();
+            //if(botP == turn)
+            {
+                s = b.findBestMove();  
+                cout<<s<<endl;
+            }
+            //else
+              //  getline(cin,s);
+            auto stop = high_resolution_clock::now();
+            auto duration = duration_cast<microseconds>(stop - start);
+            float time = duration.count()/1000000.0;
+            cout<<s<<" ----Time : "<<time<<"s----"<<endl;
+        }
+        actualMove(v,s,turn);
+        v.move(s);
+        turn = !turn;
+    }while(isWin()==-1);
+    
+    if(isWin()==1)
+        cout<<"Red wins\n";
+    else
+        cout<<"Blue wins\n";   
+}*/
 
 int main()
 {
@@ -689,7 +744,6 @@ int main()
         play(true);
     else
         play(false);
-    
     return 0;
 }
 
