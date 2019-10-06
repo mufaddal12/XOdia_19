@@ -326,8 +326,8 @@ int bot::eval()
 
     //----------Marble out of board-----------
     //When some marbles are pushed botPlayers or !botPlayers
-    pushVal += (1000*(Marbles[!botPlayer] - comp.marbles[!botPlayer]));
-    pushVal += (1000*(comp.marbles[botPlayer] - Marbles[botPlayer]));
+    pushVal += (1500*(Marbles[!botPlayer] - comp.marbles[!botPlayer]));
+    pushVal += (1500*(comp.marbles[botPlayer] - Marbles[botPlayer]));
 
 
 
@@ -377,10 +377,10 @@ int bot::eval()
 int bot::clusterValue(vector<string> neighs)
 {
     if (neighs.size() == 0)
-        return -500;
+        return -300;
     else
     {
-        int val = 50;
+        int val = 10;
         val *= neighs.size();
         return val;
     }
@@ -394,6 +394,8 @@ int bot::centreDist(string pos)
         mod = abs(pos[1] - mid[1]);
     else if(pos[1] == mid[1])
         mod = abs(mid[0] - pos[0]);
+    else if(mid[0] - pos[0] == pos[1] - mid[1])
+        mod = abs(mid[1] - pos[1]) + 1;
     else if(pos[0] == 'C')
     {
         if(pos[1] == '2' || pos[1] == '7')
@@ -425,7 +427,7 @@ int bot::centreDist(string pos)
     else
         mod = 4;
     
-    return (4-mod)*25;
+    return (4-mod)*100;
 }
 
 string bot::findBestMove()
@@ -450,13 +452,17 @@ string bot::findBestMove()
             bestVal = moveVal;
         }
         else if(moveVal == bestVal)
+        {
+            srand(time(0));
+            int k = rand() % 2;
             bestMoves.push_back(move);
-        
+            string in = bestMoves[k];
+            bestMoves.clear();
+            bestMoves.push_back(in);       
+        }
         comp = temp;
     }
-    srand(time(0));
-    int i = rand() % bestMoves.size();
-    return bestMoves[i];
+    return bestMoves[0];
 }
 
 int bot::miniMax(bool isMax, int h, int alpha, int beta)
@@ -674,8 +680,9 @@ void play(bool botP)
     /*if(isWin()==1)
         cout<<"Red wins\n";
     else
-        cout<<"Blue wins\n";    */
+        cout<<"Blue wins\n";  */ 
 }
+
 /*
 void play(bool botP)
 {
