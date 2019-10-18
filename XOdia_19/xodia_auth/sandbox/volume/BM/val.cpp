@@ -393,7 +393,19 @@ void play()
 			return;
 		}
 		getline(cin, s);
-
+		drawCheck.push_back(s);
+		if (drawCheck.size() == 9)
+		{
+			if ((drawCheck[0] == drawCheck[4] && drawCheck[4] == drawCheck[8]) && (drawCheck[1] == drawCheck[5]) && (drawCheck[2] == drawCheck[6]) && (drawCheck[3] == drawCheck[7]))
+			{
+				cout << "DRAW\n";
+				return;
+			}
+			else
+			{
+				drawCheck.erase(drawCheck.begin());
+			}
+		}
 		if (board.validate(s))
 		{
 			board.move(s);
@@ -414,18 +426,10 @@ void play()
 		else
 		{
 			cout << "INVALID MOVE!\n";
-			continue;
-		}
-		/*
-		if (board.winner() == white)
-		{
-			cout << "WIN\n";
-			cout << s << endl;
-			cout << "1\n";
-			cout << "4 dragons knocked off the board!\n";
 			return;
 		}
-*/
+
+		getline(cin, s);
 		drawCheck.push_back(s);
 		if (drawCheck.size() == 9)
 		{
@@ -439,9 +443,6 @@ void play()
 				drawCheck.erase(drawCheck.begin());
 			}
 		}
-
-		getline(cin, s);
-
 		if (board.validate(s))
 		{
 			board.move(s);
@@ -463,29 +464,6 @@ void play()
 		{
 			cout << "INVALID MOVE!\n";
 			return;
-		}
-		/*
-		if (board.winner() == black)
-		{
-			cout << "WIN\n";
-			cout << s << endl;
-			cout << "0\n";
-			cout << "4 dragons knocked off the board\n";
-			return;
-		}
-*/
-		drawCheck.push_back(s);
-		if (drawCheck.size() == 9)
-		{
-			if ((drawCheck[0] == drawCheck[4] && drawCheck[4] == drawCheck[8]) && (drawCheck[1] == drawCheck[5]) && (drawCheck[2] == drawCheck[6]) && (drawCheck[3] == drawCheck[7]))
-			{
-				cout << "DRAW\n";
-				return;
-			}
-			else
-			{
-				drawCheck.erase(drawCheck.begin());
-			}
 		}
 	}
 }

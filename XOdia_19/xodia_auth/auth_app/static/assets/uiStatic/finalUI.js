@@ -30,7 +30,7 @@ var p = [];
 var p2 = [];
 var c1 = 0;
 var c2 = 0;
-var p3, p4, p5, b, l;
+var p3, p4, p5, b, l, g;
 var pushToken;
 var count1;
 var eliminatePosYDistance = 130;
@@ -38,6 +38,9 @@ var eliminatePosY1 = 105;
 var eliminatePosY2 = 130;
 var gameOver = false;
 var undoButton = document.getElementById("undo");
+
+
+var g, g1, g2;
 
 var s;
 var d;
@@ -610,6 +613,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
   //if can eliminate
   //else if confirm
   //else invalid
+  g = 0;
   if (turn) {
     if (
       moveDirection === "horizontalRight" &&
@@ -621,6 +625,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           //Move and eliminate
           t1.m = t2.m;
           t2.m = t2.m + 50;
+          g1 = p2[pushToken].m;
+          g2 = p2[pushToken].n
           p2[pushToken].m = eliminatePosX;
           p2[pushToken].n = d - eliminatePosY1;
           eliminatePosX += 50;
@@ -629,6 +635,12 @@ function valid2(t1, t2, pushToken, moveDirection) {
           printTurn(turn);
           console.log("Eliminated");
           messagesStatus.innerHTML += "Eliminated!<br>";
+          g = 1;
+          //if (p2[pushToken].n=== d - eliminatePosY2 && ) 
+          //{
+
+          //}
+
         } else {
           console.log("Invalid Move! Please Try Again! ");
           messagesStatus.innerHTML += "Invalid Move! Please Try Again<br>";
@@ -655,6 +667,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           //Move and eliminate
           t1.m = t2.m;
           t2.m = t2.m - 50;
+          g1 = p2[pushToken].m;
+          g2 = p2[pushToken].n
           p2[pushToken].m = eliminatePosX;
           p2[pushToken].n = d - eliminatePosY1;
           eliminatePosX += 50;
@@ -662,6 +676,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         } else {
           console.log("Invalid Move! Please Try Again! ");
@@ -703,6 +718,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m + 25;
           t2.n = t2.n + 43.3;
+          g1 = p2[pushToken].m;
+          g2 = p2[pushToken].n
           p2[pushToken].m = eliminatePosX;
           p2[pushToken].n = d - eliminatePosY1;
           eliminatePosX += 50;
@@ -710,6 +727,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         }
       } else if (confirm2(p2[pushToken].m + 25, p2[pushToken].n + 43.3)) {
@@ -749,6 +767,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m - 25;
           t2.n = t2.n + 43.3;
+          g1 = p2[pushToken].m;
+          g2 = p2[pushToken].n
           p2[pushToken].m = eliminatePosX;
           p2[pushToken].n = d - eliminatePosY1;
           eliminatePosX += 50;
@@ -756,6 +776,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         }
       } else if (confirm2(p2[pushToken].m - 25, p2[pushToken].n + 43.3)) {
@@ -795,6 +816,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m + 25;
           t2.n = t2.n - 43.3;
+          g1 = p2[pushToken].m;
+          g2 = p2[pushToken].n
           p2[pushToken].m = eliminatePosX;
           p2[pushToken].n = d - eliminatePosY1;
           eliminatePosX += 50;
@@ -802,6 +825,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         }
       } else if (confirm2(p2[pushToken].m + 25, p2[pushToken].n - 43.3)) {
@@ -841,6 +865,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m - 25;
           t2.n = t2.n - 43.3;
+          g1 = p2[pushToken].m;
+          g2 = p2[pushToken].n
           p2[pushToken].m = eliminatePosX;
           p2[pushToken].n = d - eliminatePosY1;
           eliminatePosX += 50;
@@ -848,6 +874,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         }
         return p2[pushToken];
@@ -870,17 +897,27 @@ function valid2(t1, t2, pushToken, moveDirection) {
       console.log("Invalid Move! Please Try Again!");
       messagesStatus.innerHTML += "Invalid Move! Please Try Again<br>";
     }
-  } else {
+  }
+
+
+
+
+  else {
     if (
       moveDirection === "horizontalRight" &&
       t2.m + 50 === p[pushToken].m &&
       Math.ceil(t2.n) === Math.ceil(p[pushToken].n)
     ) {
+      console.log("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
+      console.log(Math.ceil(d + 129.9))
       if (p[pushToken].m === getXUpperlimit(p[pushToken].n)) {
-        if (p[pushToken].n !== Math.ceil(d + 129.9)) {
-          //Move and eliminate
+        console.log(p[pushToken].n);
+        if (Math.ceil(p[pushToken].n) !== Math.ceil(d + 129.9)) {
+          //Move and eliminaonsole.
           t1.m = t2.m;
           t2.m = t2.m + 50;
+          g1 = p[pushToken].m;
+          g2 = p[pushToken].n;
           p[pushToken].m = eliminatePosX2;
           p[pushToken].n = d + 260 + eliminatePosY2;
           eliminatePosX2 += 50;
@@ -888,6 +925,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated<br>";
         } else {
           console.log("Invalid Move! Please Try Again! ");
@@ -911,10 +949,12 @@ function valid2(t1, t2, pushToken, moveDirection) {
       Math.ceil(t2.n) === Math.ceil(p[pushToken].n)
     ) {
       if (p[pushToken].m === getXLowerlimit(p[pushToken].n)) {
-        if (p[pushToken].n !== Math.ceil(d + 129.9)) {
+        if (Math.ceil(p[pushToken].n) !== Math.ceil(d + 129.9)) {
           //Move and eliminate
           t1.m = t2.m;
           t2.m = t2.m - 50;
+          g1 = p[pushToken].m;
+          g2 = p[pushToken].n;
           p[pushToken].m = eliminatePosX2;
           p[pushToken].n = d + 260 + eliminatePosY2;
           eliminatePosX2 += 50;
@@ -922,6 +962,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         } else {
           console.log("Invalid Move! Please Try Again! ");
@@ -961,6 +1002,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m + 25;
           t2.n = t2.n + 43.3;
+          g1 = p[pushToken].m;
+          g2 = p[pushToken].n;
           p[pushToken].m = eliminatePosX2;
           p[pushToken].n = d + 260 + eliminatePosY2;
           eliminatePosX2 += 50;
@@ -968,6 +1011,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         }
       } else if (confirm2(p[pushToken].m + 25, p[pushToken].n + 43.3)) {
@@ -1007,6 +1051,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m - 25;
           t2.n = t2.n + 43.3;
+          g1 = p[pushToken].m;
+          g2 = p[pushToken].n;
           p[pushToken].m = eliminatePosX2;
           p[pushToken].n = d + 260 + eliminatePosY2;
           eliminatePosX2 += 50;
@@ -1014,6 +1060,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated!<br>";
         }
       } else if (confirm2(p[pushToken].m - 25, p[pushToken].n + 43.3)) {
@@ -1053,6 +1100,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m + 25;
           t2.n = t2.n - 43.3;
+          g1 = p[pushToken].m;
+          g2 = p[pushToken].n;
           p[pushToken].m = eliminatePosX2;
           p[pushToken].n = d + 260 + eliminatePosY2;
           eliminatePosX2 += 50;
@@ -1060,6 +1109,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated<br>";
         }
       } else if (confirm2(p[pushToken].m + 25, p[pushToken].n - 43.3)) {
@@ -1099,6 +1149,8 @@ function valid2(t1, t2, pushToken, moveDirection) {
           t1.n = t2.n;
           t2.m = t2.m - 25;
           t2.n = t2.n - 43.3;
+          g1 = p[pushToken].m;
+          g2 = p[pushToken].n;
           p[pushToken].m = eliminatePosX2;
           p[pushToken].n = d + 260 + eliminatePosY2;
           eliminatePosX2 += 50;
@@ -1106,6 +1158,7 @@ function valid2(t1, t2, pushToken, moveDirection) {
           turn = !turn;
           printTurn(turn);
           console.log("Eliminated");
+          g = 1;
           messagesStatus.innerHTML += "Eliminated<br>";
         }
         return p[pushToken];
@@ -1134,8 +1187,9 @@ function valid2(t1, t2, pushToken, moveDirection) {
   console.log(p[pushToken]);
 }
 
-undoButton.onclick = function() {
+undoButton.onclick = function () {
   console.log(p5);
+  console.log(g);
   console.log("Inside undo");
   if (count1 === 0) {
     turn = !turn;
@@ -1168,12 +1222,69 @@ undoButton.onclick = function() {
         p3.n = p3.n + 43.3;
       }
       count1++;
-    } else {
+    }
+
+    else if (g == 1) {
+      console.log("3rd case");
+      if (b === 1) {
+        p4.m = p3.m;
+        p3.m = p3.m - 50;
+        p5.m = g1;
+        p5.n = g2;
+      } else if (b === 2) {
+        p4.m = p3.m;
+        p3.m = p3.m + 50;
+        p5.m = g1;
+        p5.n = g2;
+      } else if (b === 3) {
+        p4.m = p3.m;
+        p4.n = p3.n;
+        p3.m = p3.m - 25;
+        p3.n = p3.n - 43.3;
+        p5.m = g1;
+        p5.n = g2;
+      } else if (b === 4) {
+        p4.m = p3.m;
+        p4.n = p3.n;
+        p3.m = p3.m + 25;
+        p3.n = p3.n - 43.3;
+        p5.m = g1;
+        p5.n = g2;
+      } else if (b === 5) {
+        p4.m = p3.m;
+        p4.n = p3.n;
+        p3.m = p3.m - 25;
+        p3.n = p3.n + 43.3;
+        p5.m = g1;
+        p5.n = g2;
+      } else if (b === 6) {
+        console.log("orngjkerbvjernvberjvberbernvuier");
+        p4.m = p3.m;
+        p4.n = p3.n;
+        p3.m = p3.m + 25;
+        p3.n = p3.n + 43.3;
+        p5.m = g1;
+        p5.n = g2;
+      }
+      if (turn) {
+        eliminatePosX -= 50;
+        c2--;
+      }
+      else {
+        eliminatePosX2 -= 50;
+        c1--;
+      }
+      count1++;
+    }
+
+    else {
       console.log("2nd case");
       if (b === 1) {
         p4.m = p3.m;
         p3.m = p3.m - 50;
         p5.m = p5.m - 50;
+
+
       } else if (b === 2) {
         p4.m = p3.m;
         p3.m = p3.m + 50;
@@ -1209,6 +1320,7 @@ undoButton.onclick = function() {
       }
       count1++;
     }
+
   } else alert("UNDO ALLOWED ONLY ONCE!!");
 };
 
@@ -1267,7 +1379,7 @@ var dict = {
   }
 };
 var str;
-document.getElementById("stringbtn").onclick = function() {
+document.getElementById("stringbtn").onclick = function () {
   console.log("Hello");
   str = document.getElementById("stringip").value;
   document.getElementById("stringip").value = "";
@@ -1285,15 +1397,15 @@ document.getElementById("stringbtn").onclick = function() {
 
   console.log(
     "First token to be selected is " +
-      "(" +
-      x1 +
-      "," +
-      y1 +
-      ")" +
-      "Second token to be selected is " +
-      x2 +
-      "," +
-      y2
+    "(" +
+    x1 +
+    "," +
+    y1 +
+    ")" +
+    "Second token to be selected is " +
+    x2 +
+    "," +
+    y2
   );
 
   move(t, u);
