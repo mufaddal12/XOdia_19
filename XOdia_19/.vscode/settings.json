@@ -1,0 +1,9 @@
+{
+    "python.pythonPath": "/home/kapil/anaconda3/envs/xodia/bin/python",
+    "files.associations": {
+        "iostream": "cpp"
+    },
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pep8Enabled": true
+}
